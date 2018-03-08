@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Add User {% endblock %}
+
+{% block body %}
+
+    {{  parent() }}
+    <!-- Main content -->
+    <div class="content-wrapper">
+
+        <!-- Content area -->
+        <div class="content">
+
+            <!-- Horizontal form -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Add User</h5>
+                </div>
+
+                <div class="panel-body">
+                    {% trans_default_domain 'FOSUserBundle' %}
+
+                    <div class="container-fluid">
+                        {{ form_start(form, {'action': path('fos_user_registration_register'), 'attr': {'class': 'form-horizontal fos_user_registration_register'}}) }}
+                        {{ form_errors(form) }}
+
+                        <div class="form-group">
+                            {{ form_label(form.firstname, "Firstname", {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+                            <div class="col-lg-10">
+                                {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            {{ form_errors(form.firstname) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.lastname, "Lastname", {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+                            <div class="col-lg-10">
+                                {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            {{ form_errors(form.lastname) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.username, "Username", {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+                            <div class="col-lg-10">
+                                {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            {{ form_errors(form.username) }}
+                        </div>
+
+
+                        <div class="form-group">
+                            {{ form_label(form.plainPassword.first, "Password", {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+                            <div class="col-lg-10">
+                                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            {{ form_errors(form.plainPassword.first) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.plainPassword.second, "Password Confirmation", {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+                            <div class="col-lg-10">
+                                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            {{ form_errors(form.plainPassword.second) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.email, "Email", {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+                            <div class="col-lg-10">
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            {{ form_errors(form.email) }}
+                        </div>
+
+                        {{ form_row(form.image) }}
+                        <div class="container">
+                            <div class="row">
+                                <input type="submit" value="Save" class="btn bg-teal-300" />
+                                <a class="btn btn-default" href="{{ path('index_user_page') }}">Back</a>
+                            </div>
+                        </div>
+
+                        {{ form_rest(form) }}
+                        {{ form_end(form) }}
+
+                    </div>
+                </div>
+            </div>
+            <!-- /horizotal form -->
+
+            {% include 'IndexBundle::footer.html.twig' %}
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <!-- /main content -->
+    </div>
+    <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+{% endblock %}

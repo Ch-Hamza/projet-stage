@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Edit User {% endblock %}
+
+{% block body %}
+
+    {{  parent() }}
+    <!-- Main content -->
+    <div class="content-wrapper">
+
+        <!-- Content area -->
+        <div class="content">
+
+            <!-- Horizontal form -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Edit User</h5>
+                </div>
+
+                <div class="panel-body">
+                    {% include 'UserBundle::EditUserForm.html.twig' %}
+                </div>
+            </div>
+            <!-- /horizotal form -->
+
+            {% include 'IndexBundle::footer.html.twig' %}
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <!-- /main content -->
+    </div>
+    <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - List Users {% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+    <!-- Main content -->
+    <div class="content-wrapper">
+
+        <!-- Content area -->
+        <div class="content">
+
+            <!-- Table -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">User Repository</h5>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in listUsers %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td><a class="btn bg-teal-400 btn-labeled" href="{{ path('view_user_page', {'id': user.id}) }}"><b><i class="icon-eye"></i></b> View</a></td>
+                                <td><a class="btn btn-info btn-labeled" href="{{ path('edit_user_page', {'id': user.id}) }}"><b><i class="icon-pencil5"></i></b> Edit</a></td>
+                                <td><a class="btn btn-danger btn-labeled" href="{{ path('delete_user_page', {'id': user.id}) }}"><b><i class="icon-trash"></i></b> Delete</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- /table -->
+
+            <div>
+                <a class="btn btn-xlg bg-orange-600" href="{{ path('fos_user_registration_register') }}">Add User</a>
+            </div>
+
+        </div>
+        <!-- /content area -->
+        {{ include('IndexBundle::footer.html.twig') }}
+    </div>
+    <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+{% endblock %}

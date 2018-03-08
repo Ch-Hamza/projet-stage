@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+
+    <!-- Page container -->
+    <div class="page-container login-container">
+
+        <!-- Content area -->
+        <div class="content">
+
+            <!-- Simple login form -->
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+
+                {% if csrf_token %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                {% endif %}
+
+                <div class="panel panel-body login-form">
+                    <div class="text-center">
+                        <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                        <h5 class="content-group">Login to your account <small class="display-block">Enter your credentials below</small></h5>
+                    </div>
+
+                    <div class="form-group has-feedback has-feedback-left">
+                        <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}" required="required" autocomplete="username" placeholder="Username or Email">
+                        <div class="form-control-feedback">
+                            <i class="icon-user text-muted"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group has-feedback has-feedback-left">
+                        <input type="password" id="password" name="_password" required="required" autocomplete="current-password" class="form-control" placeholder="Password">
+                        <div class="form-control-feedback">
+                            <i class="icon-lock2 text-muted"></i>
+                        </div>
+                    </div>
+
+                    <input type="checkbox" id="remember_me" name="_remember_me" />
+                    <label for="remember_me">Remember me</label>
+
+                    <div class="form-group">
+                        <button type="submit" id="_submit" name="_submit" class="btn btn-primary btn-block">Sign in <i class="icon-circle-right2 position-right"></i></button>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="login_password_recover.html">Forgot password?</a>
+                    </div>
+                </div>
+
+            </form>
+            <!-- /simple login form -->
+
+            <!-- error messages -->
+            <div class="container">
+                {% if error %}
+                    <div class="alert alert-danger center-block">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+            </div>
+
+
+            <!-- Footer -->
+            {% include '@Index/footer.html.twig' %}
+            <!-- /footer -->
+
+        </div>
+        <!-- /content area -->
+    </div>
+
+{% endblock %}

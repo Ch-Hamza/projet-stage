@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{  parent() }}
+    <!-- Main content -->
+    <div class="content-wrapper">
+
+        <!-- Content area -->
+        <div class="content">
+
+            {% include 'IndexBundle::stat_panel.html.twig' %}
+            {% include 'IndexBundle::visits_panel.html.twig' %}
+            {% include 'IndexBundle::map_panel.html.twig' %}
+            {% include 'IndexBundle::history_table.html.twig' %}
+            {% include 'IndexBundle::footer.html.twig' %}
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <!-- /main content -->
+    </div>
+    <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+{% endblock %}

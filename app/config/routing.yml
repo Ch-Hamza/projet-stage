@@ -1,0 +1,16 @@
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /users
+
+index:
+    resource: "@IndexBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /users/add

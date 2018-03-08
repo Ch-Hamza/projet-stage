@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}- View User{% endblock %}
+
+{% block body %}
+
+        {{  parent() }}
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Content area -->
+            <div class="content">
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <!-- Simple panel -->
+                        <div class="panel panel-flat">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">Panel</h5>
+                            </div>
+
+                            <div class="panel-body">
+                                <h6 class="text-semibold">stats</h6>
+                                <p class="content-group">stats for history chart showing number of changes made each day ...</p>
+                            </div>
+                        </div>
+                        <!-- /simple panel -->
+                    </div>
+
+                    <div class="col-lg-4">
+                        <!-- User thumbnail -->
+                        <div class="thumbnail">
+                            <div class="thumb thumb-rounded thumb-slide">
+                                <img src="{{ asset('assets/images/placeholder.jpg') }}" alt="">
+                            </div>
+
+                            <div class="caption text-center">
+                                <h6 class="text-semibold no-margin">{{ user.firstname }} {{ user.lastname }} <small class="display-block">Administrator</small></h6>
+                                <ul class="icons-list mt-15">
+                                    <li><a href="#" data-popup="tooltip" title="Send Email"><i class="icon-envelope"></i></a></li>
+                                    <li><a href="#" data-popup="tooltip" title="Edit User"><i class="icon-pencil7"></i></a></li>
+                                    <li><a href="#" data-popup="tooltip" title="Delete User"><i class="icon-trash"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /user thumbnail -->
+                    </div>
+                </div>
+
+                <!-- Simple panel -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Panel</h5>
+                    </div>
+
+                    <div class="panel-body">
+                        <h6 class="text-semibold">hitory</h6>
+                        <p class="content-group">list history operations</p>
+                    </div>
+                </div>
+                <!-- /simple panel -->
+
+                <!-- Simple panel -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Panel</h5>
+                    </div>
+
+                    <div class="panel-body">
+                        <h6 class="text-semibold">mailing form</h6>
+                        <p class="content-group">form to send email to this admin</p>
+                    </div>
+                </div>
+                <!-- /simple panel -->
+
+                {% include 'IndexBundle::footer.html.twig' %}
+
+            </div>
+            <!-- /content area -->
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
+
+</div>
+<!-- /page container -->
+
+{% endblock %}
