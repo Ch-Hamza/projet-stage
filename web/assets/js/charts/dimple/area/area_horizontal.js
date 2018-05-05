@@ -21,8 +21,16 @@ $(function () {
     d3.tsv("assets/demo_data/dimple/demo_data.tsv", function (data) {
 
         // Filter data
-        data = dimple.filterData(data, "Owner", ["Aperture", "Black Mesa"])
-
+        //data = dimple.filterData(data, "Owner", ["Aperture", "Black Mesa"])
+        data = [
+            { "Date":"30/04/2018", "Number of Users":12 },
+            { "Date":"29/04/2018", "Number of Users":22 },
+            { "Date":"28/04/2018", "Number of Users":20 },
+            { "Date":"27/04/2018", "Number of Users":15 },
+            { "Date":"26/04/2018", "Number of Users":11 },
+            { "Date":"25/04/2018", "Number of Users":12 },
+            { "Date":"24/04/2018", "Number of Users":10 },
+        ];
 
         // Create chart
         // ------------------------------
@@ -31,7 +39,7 @@ $(function () {
         var myChart = new dimple.chart(svg, data);
 
         // Set bounds
-        myChart.setBounds(0, 0, "100%", "100%");
+        //myChart.setBounds(0, 0, "100%", "100%");
 
         // Set margins
         myChart.setMargins(55, 10, 10, 50);
@@ -41,11 +49,10 @@ $(function () {
         // ------------------------------
 
         // Horizontal
-        var x = myChart.addCategoryAxis("x", "Month");
-            x.addOrderRule("Date");
+        var x = myChart.addCategoryAxis("x", "Date");
 
         // Vertical
-        var y = myChart.addMeasureAxis("y", "Unit Sales");
+        var y = myChart.addMeasureAxis("y", "Number of Users");
 
 
         // Construct layout

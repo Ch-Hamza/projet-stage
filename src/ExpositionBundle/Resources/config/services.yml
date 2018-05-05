@@ -1,0 +1,4 @@
+services:
+#    exposition.example:
+#        class: ExpositionBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

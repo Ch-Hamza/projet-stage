@@ -20,7 +20,7 @@ class RedirectAfterRegistrationSubscriber implements EventSubscriberInterface
 
     public function onRegistrationSucess(FormEvent $event)
     {
-        $url = $this->router->generate('index_user_page');
+        $url = $this->router->generate('fos_user_security_login');
         $response = new RedirectResponse($url);
         $event->setResponse($response);
     }
@@ -28,7 +28,8 @@ class RedirectAfterRegistrationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            FOSUserEvents::REGISTRATION_SUCCESS => 'onRegistrationSucess'
+            FOSUserEvents::REGISTRATION_SUCCESS => 'onRegistrationSucess',
+
         ];
     }
 

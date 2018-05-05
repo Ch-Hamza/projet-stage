@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - List Categories {% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+    <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Category</h4>
+                </div>
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('index_page') }}"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="{{ path('index_category_page') }}">Cateogry</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header -->
+
+        <!-- Content area -->
+        <div class="content">
+
+        <!-- Table -->
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-10"><h5 class="panel-title">Category Repository</h5></div>
+                    <div class="col-md-2"><a class="btn btn-success" href="{{ path('add_category_page') }}">Add Category</a></div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title FR</th>
+                        <th>Title EN</th>
+                        <th>Title IT</th>
+                        <th>Title DE</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for category in listCategories %}
+                        <tr>
+                            <td>{{ category.id }}</td>
+                            <td>{{ category.titleFr }}</td>
+                            <td>{{ category.titleEn }}</td>
+                            <td>{{ category.titleIt }}</td>
+                            <td>{{ category.titleDe }}</td>
+                            <td><img src="{{ vich_uploader_asset(category,'imageFile') }}" alt=""></td>
+                            <td>
+                                <ul class="icons-list mt-15">
+                                    <li><a href="{{ path('edit_category_page', {'id': category.id}) }}" data-popup="tooltip" title="Edit"><i class="icon-pencil5"></i></a></li>
+                                    <li><a href="{{ path('delete_category_page', {'id': category.id}) }}" data-popup="tooltip" title="Delete" onclick="return confirm('Are you sure you want to Delete this Category?')"><i class=" icon-trash"></i></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- /table -->
+
+        {{ include('IndexBundle::footer.html.twig') }}
+
+    </div>
+    <!-- /content area -->
+    </div>
+
+    </div>
+    <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+{% endblock %}

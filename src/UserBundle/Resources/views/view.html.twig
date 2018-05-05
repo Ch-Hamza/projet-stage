@@ -4,85 +4,126 @@
 
 {% block body %}
 
-        {{  parent() }}
-        <!-- Main content -->
-        <div class="content-wrapper">
-
-            <!-- Content area -->
-            <div class="content">
-
-                <div class="row">
-                    <div class="col-lg-8">
-                        <!-- Simple panel -->
-                        <div class="panel panel-flat">
-                            <div class="panel-heading">
-                                <h5 class="panel-title">Panel</h5>
-                            </div>
-
-                            <div class="panel-body">
-                                <h6 class="text-semibold">stats</h6>
-                                <p class="content-group">stats for history chart showing number of changes made each day ...</p>
-                            </div>
-                        </div>
-                        <!-- /simple panel -->
-                    </div>
-
-                    <div class="col-lg-4">
-                        <!-- User thumbnail -->
-                        <div class="thumbnail">
-                            <div class="thumb thumb-rounded thumb-slide">
-                                <img src="{{ asset('assets/images/placeholder.jpg') }}" alt="">
-                            </div>
-
-                            <div class="caption text-center">
-                                <h6 class="text-semibold no-margin">{{ user.firstname }} {{ user.lastname }} <small class="display-block">Administrator</small></h6>
-                                <ul class="icons-list mt-15">
-                                    <li><a href="#" data-popup="tooltip" title="Send Email"><i class="icon-envelope"></i></a></li>
-                                    <li><a href="#" data-popup="tooltip" title="Edit User"><i class="icon-pencil7"></i></a></li>
-                                    <li><a href="#" data-popup="tooltip" title="Delete User"><i class="icon-trash"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /user thumbnail -->
-                    </div>
+    {{  parent() }}
+    <!-- Main content -->
+    <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Administrators</h4>
                 </div>
-
-                <!-- Simple panel -->
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
-                        <h5 class="panel-title">Panel</h5>
-                    </div>
-
-                    <div class="panel-body">
-                        <h6 class="text-semibold">hitory</h6>
-                        <p class="content-group">list history operations</p>
-                    </div>
-                </div>
-                <!-- /simple panel -->
-
-                <!-- Simple panel -->
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
-                        <h5 class="panel-title">Panel</h5>
-                    </div>
-
-                    <div class="panel-body">
-                        <h6 class="text-semibold">mailing form</h6>
-                        <p class="content-group">form to send email to this admin</p>
-                    </div>
-                </div>
-                <!-- /simple panel -->
-
-                {% include 'IndexBundle::footer.html.twig' %}
-
             </div>
-            <!-- /content area -->
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('index_page') }}"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="{{ path('index_admins_page') }}">Administrators</a></li>
+                    <li class="active">View Admin</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header -->
+
+        <!-- Content area -->
+        <div class="content">
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Simple panel -->
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Panel</h5>
+                        </div>
+
+                        <div class="panel-body">
+                            <h6 class="text-semibold">stats</h6>
+                            <p class="content-group">stats for history chart showing number of changes made each day ...</p>
+                        </div>
+                    </div>
+                    <!-- /simple panel -->
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- User thumbnail -->
+                    <div class="thumbnail">
+                        <div class="thumb thumb-rounded thumb-slide">
+                            <img src="{{ vich_uploader_asset(app.user, 'imageFile') }}" alt="">
+                        </div>
+
+                        <div class="caption text-center">
+                            <h6 class="text-semibold no-margin">{{ user.firstname }} {{ user.lastname }} <small class="display-block">Administrator</small></h6>
+                            <ul class="icons-list mt-15">
+                                <li><a href="#" data-popup="tooltip" title="Send Email"><i class="icon-envelope"></i></a></li>
+                                <li><a href="{{ path('edit_user_page', {'id': user.id}) }}" data-popup="tooltip" title="Edit User"><i class="icon-pencil7"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /user thumbnail -->
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Recent Actions</h5>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Admin</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for entry in listHist %}
+
+                        <tr>
+                            <td>{{ entry.id }}</td>
+                            <td>{{ entry.user.getUsername }}</td>
+                            <td>{{ entry.date|date('d-m-Y') }}</td>
+                            <td>{{ entry.content }}</td>
+                        </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /table -->
+
+            <!-- Simple panel -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Panel</h5>
+                </div>
+
+                <div class="panel-body">
+                    <h6 class="text-semibold">mailing form</h6>
+                    <p class="content-group">form to send email to this admin</p>
+                </div>
+            </div>
+            <!-- /simple panel -->
+
+            {% include 'IndexBundle::footer.html.twig' %}
 
         </div>
-        <!-- /main content -->
+        <!-- /content area -->
 
     </div>
-    <!-- /page content -->
+    <!-- /main content -->
+
+</div>
+<!-- /page content -->
 
 </div>
 <!-- /page container -->

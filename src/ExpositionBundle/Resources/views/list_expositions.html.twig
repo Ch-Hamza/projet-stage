@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} - List Expositions {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_expositions.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.1/js/responsive.bootstrap.min.js"></script>
+{% endblock %}
+{% block body %}
+
+    {{ parent() }}
+    <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Expositions</h4>
+                </div>
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('index_page') }}"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="{{ path('index_exposition_page') }}">Expositions</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header -->
+
+        <!-- Content area -->
+        <div class="content">
+            <!-- Basic datatable -->
+            <div class="panel panel-flat" style="padding: 10px;">
+                <div class="panel-heading">
+                    <div class="row">
+                        {% if(app.user.roles[0]=="ROLE_ADMIN") %}
+                        <a class="btn btn-success" href="{{ path('add_exposition_page') }}"><i class="icon-plus3 position-left"></i>Add Exposition</a></div>
+                    {% endif %}
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table datatable-basic">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Start</th>
+                            <th>Finish</th>
+                            <th>Museum</th>
+                            <th>Description</th>
+                            <th>Images</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {{ include('IndexBundle::footer.html.twig') }}
+        </div>
+        <!-- /content area -->
+
+    </div>
+    </div>
+    <!-- /page content -->
+    </div>
+    <!-- /page container -->
+
+{% endblock %}
+

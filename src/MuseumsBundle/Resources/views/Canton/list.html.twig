@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - List Canton {% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+    <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Canton</h4>
+                </div>
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('index_page') }}"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="{{ path('index_museums_page') }}">Canton</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header -->
+
+        <!-- Content area -->
+        <div class="content">
+
+        <!-- Table -->
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-10"><h5 class="panel-title">Canton Repository</h5></div>
+                    <div class="col-md-2"><a class="btn btn-success" href="{{ path('add_canton_page') }}">Add Canton</a></div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for canton in listCanton %}
+                        <tr>
+                            <td>{{ canton.id }}</td>
+                            <td>{{ canton.title }}</td>
+                            <td><img src="{{ vich_uploader_asset(canton,'imageFile') }}" alt=""></td>
+                            <td>
+                                <ul class="icons-list mt-15">
+                                    <li><a href="{{ path('edit_canton_page', {'id': canton.id}) }}" data-popup="tooltip" title="Edit Canton"><i class="icon-pencil5"></i></a></li>
+                                    <li><a href="{{ path('delete_canton_page', {'id': canton.id}) }}" data-popup="tooltip" title="Delete Canton" onclick="return confirm('Are you sure you want to Delete this Canton?')"><i class="icon-trash"></i></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- /table -->
+
+        {{ include('IndexBundle::footer.html.twig') }}
+
+    </div>
+    <!-- /content area -->
+    </div>
+
+    </div>
+    <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+{% endblock %}

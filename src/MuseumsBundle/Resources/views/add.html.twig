@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Add Musuem {% endblock %}
+
+{% block stylesheets %}
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/core.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/components.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/colors.css') }}" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+
+
+    <!-- Core JS files -->
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/loaders/pace.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/core/libraries/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/loaders/blockui.min.js') }}"></script>
+    <!-- /core JS files -->
+
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/selects/bootstrap_multiselect.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/ui/moment/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/daterangepicker.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/core/app.js') }}"></script>
+    <!-- /theme JS files -->
+
+    <script type="text/javascript" src="{{ asset('assets/js/edit_museum_images.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {{  parent() }}
+    <!-- Main content -->
+    <div class="content-wrapper">
+
+        <!-- Content area -->
+        <div class="content">
+
+            <!-- Horizontal form -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Add Museum</h5>
+                </div>
+
+                <div class="panel-body">
+                    <div class="container-fluid">
+                        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.description_fr) }}
+                        {{ form_row(form.description_en) }}
+                        {{ form_row(form.description_it) }}
+                        {{ form_row(form.description_de) }}
+                        {{ form_row(form.horaire) }}
+                        {{ form_row(form.price) }}
+                        {{ form_row(form.place) }}
+                        {{ form_row(form.rue) }}
+                        {{ form_row(form.codePostal) }}
+                        {{ form_row(form.directions) }}
+                        {{ form_row(form.phone) }}
+                        {{ form_row(form.fax) }}
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.website) }}
+                        {{ form_row(form.canton) }}
+                        {{ form_row(form.criteres) }}
+                        {{ form_row(form.categories) }}
+                        {{ form_row(form.location) }}
+
+                        <ul class="tags list-group" style="padding: 20px;margin: 20px" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+                            {{ form_row(form.images) }}
+                            {% for tag in form.images %}
+                                <li class="list-group-item">
+                                    {{ form_row(tag.imageFile) }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="container">
+                            <div class="row">
+                                {{ form_widget(form.save, {'attr': {'class': 'btn bg-teal-300'}}) }}
+                                <a class="btn btn-default" href="{{ path('index_museums_page') }}">Back</a>
+                            </div>
+                        </div>
+
+                        {{ form_errors(form) }}
+                        {{ form_rest(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+            <!-- /horizotal form -->
+
+            {% include 'IndexBundle::footer.html.twig' %}
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <!-- /main content -->
+    </div>
+    <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+{% endblock %}

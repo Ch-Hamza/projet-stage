@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} - List Museums {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_basic.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.1/js/responsive.bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBnIsSCHTrYA9CnxuR2sRId-3oBV7Tbs4w"></script>
+{% endblock %}
+{% block body %}
+
+    {{ parent() }}
+    <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Museums</h4>
+                </div>
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('index_page') }}"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="{{ path('index_museums_page') }}">Museums</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header -->
+
+        <!-- Content area -->
+        <div class="content">
+            <!-- Basic datatable -->
+            <div class="panel panel-flat" style="padding: 10px;">
+                <div class="panel-heading">
+                    <div class="row">
+                        {% if(app.user.roles[0]=="ROLE_ADMIN") %}
+                            <a class="btn btn-success" href="{{ path('add_museum_page') }}"><i class="icon-plus3 position-left"></i>Add Museum</a>
+                        {% endif %}
+
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table datatable-basic">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Schedule</th>
+                            <th>Entry Fee</th>
+                            <th>Street</th>
+                            <th>Code</th>
+                            <th>Canton</th>
+                            <th>Place</th>
+                            <th>Description FR</th>
+                            <th>Description EN</th>
+                            <th>Description IT</th>
+                            <th>Description DE</th>
+                            <th>Directions</th>
+                            <th>Phone</th>
+                            <th>Fax</th>
+                            <th>Email</th>
+                            <th>Website</th>
+                            <th>Images</th>
+                            <th>Categories</th>
+                            <th>Criteres</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {{ include('IndexBundle::footer.html.twig') }}
+        </div>
+        <!-- /content area -->
+
+    </div>
+</div>
+<!-- /page content -->
+</div>
+<!-- /page container -->
+
+{% endblock %}
+

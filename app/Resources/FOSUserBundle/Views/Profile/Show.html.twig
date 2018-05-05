@@ -1,0 +1,89 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}- Profile{% endblock %}
+
+{% block body %}
+
+    {{  parent() }}
+    <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Profile</h4>
+                </div>
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('index_page') }}"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="{{ path('fos_user_profile_show') }}">Profile</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header -->
+
+        <!-- Content area -->
+        <div class="content">
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Simple panel -->
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">General Information</h5>
+                            <hr>
+                        </div>
+
+                        <div class="panel-body">
+                        	<h6><span class="text-semibold"><i class="icon-user"></i>  Full Name : </span>{{ user.firstname }} {{ user.lastname }}</h4>
+                            <h6><span class="text-semibold"><i class="icon-user-check"></i>  Username : </span>{{ user.username }}</h4>
+                            <h6><span class="text-semibold"><i class="icon-envelop3"></i>  Email : </span>{{ user.email }}</h4>
+                        </div>
+                    </div>
+                    <!-- /simple panel -->
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- User thumbnail -->
+                    <div class="thumbnail">
+                        <div class="thumb thumb-rounded thumb-slide">
+                            <img src="{{ vich_uploader_asset(app.user, 'imageFile') }}" alt="" style="object-fit: cover;">
+                        </div>
+
+                        <div class="caption text-center">
+                            <h6 class="text-semibold no-margin">{{ user.firstname }} {{ user.lastname }}
+                                <small class="display-block">
+                                    {% if(app.user.roles[0]=="ROLE_ADMIN") %}
+                                        Administrator
+                                    {% else %}
+                                        Operator
+                                    {% endif %}
+                                </small>
+                            </h6>
+                            <ul class="icons-list mt-15">
+                                <li><a href="{{ path('fos_user_profile_edit') }}" data-popup="tooltip" title="Edit User"><i class="icon-pencil7"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /user thumbnail -->
+                </div>
+            </div>
+
+            {% include 'IndexBundle::footer.html.twig' %}
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+{% endblock %}

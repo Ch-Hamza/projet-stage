@@ -8,6 +8,7 @@ use UserBundle\DependencyInjection\Compiler\FOSUserOverridePass;
 
 class UserBundle extends Bundle
 {
+
     //prevent login after register
     public function build(ContainerBuilder $container)
     {

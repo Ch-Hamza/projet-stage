@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - List Advertisments {% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+    <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Advertisments</h4>
+                </div>
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('index_page') }}"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="{{ path('index_ads_page') }}">Advertisements</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header -->
+
+        <!-- Content area -->
+        <div class="content">
+
+            <!-- Table -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-10"><h5 class="panel-title">Advertisements Repository</h5></div>
+                        {% if(app.user.roles[1]=="ROLE_OPERATOR") %}
+                            <div class="col-md-2"><a class="btn btn-success" href="{{ path('add_ad_page') }}">Add Advertisement</a></div>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Type</th>
+                            <th>Image</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for ad in listAds %}
+                            <tr>
+                                <td>{{ ad.company }}</td>
+                                <td>{{ ad.type }}</td>
+                                <td>
+                                    <div class="thumbnail" style="width: 120px;height: 70px;">
+                                        <div class="thumb">
+                                            <img src="{{ vich_uploader_asset(ad,'imageFile') }}" alt="" style="width: 120px;height: 70px;">
+                                            <div class="caption-overflow">
+                                            <span>
+                                                <a href="{{ vich_uploader_asset(ad,'imageFile') }}"  data-popup="lightbox" rel="gallery" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-zoomin3"></i></a>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if ad.enabled %}
+                                        <span class="label bg-success-400">Enabled</span>
+                                    {% else %}
+                                        <span class="label bg-danger-400">Disabled</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <ul class="icons-list mt-15">
+                                        <li><a href="{{ path('enable_ad_page', {'id': ad.id}) }}" data-popup="tooltip" title="Toggle"><i class="icon-pencil3"></i></a></li>
+                                        <li><a href="{{ path('edit_ad_page', {'id': ad.id}) }}" data-popup="tooltip" title="Edit"><i class="icon-pencil5"></i></a></li>
+                                        <li><a href="{{ path('delete_ad_page', {'id': ad.id}) }}" data-popup="tooltip" title="Delete" onclick="return confirm('Are you sure you want to Delete this Advertisment?')"><i class="icon-trash"></i></a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- /table -->
+
+            {{ include('IndexBundle::footer.html.twig') }}
+
+        </div>
+        <!-- /content area -->
+    </div>
+
+</div>
+<!-- /page content -->
+
+</div>
+<!-- /page container -->
+
+{% endblock %}

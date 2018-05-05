@@ -4,8 +4,8 @@
 *
 *  Main typography overrides, including custom content
 *
-*  Version: 1.1
-*  Latest update: Oct 20, 2015
+*  Version: 1.2
+*  Latest update: Nov 25, 2015
 *
 * ---------------------------------------------------------------------------- */
 
@@ -79,7 +79,7 @@ mark,
 .mark {
     background-color: @text-color;
     padding: 2px 6px;
-    color: #fff;
+    color: #FFF;
     border-radius: @border-radius-small;
 }
 
@@ -246,17 +246,22 @@ svg {
 
 // Base
 .page-header {
-    margin: 0;
-    padding: 0;
-    border-bottom-width: 0;
+    margin: 0 0 @line-height-computed 0;
+    padding-bottom: 0;
+    background-color: #fff;
 
-    // Navbar
-    .navbar {
-        margin-bottom: @line-height-computed;
+    // Content
+    &:not(.page-header-transparent) {
+        > .page-header-content {
+            & + .navbar,
+            & + .navbar-collapse > .navbar {
+                border-bottom: 0;
+            }
+        }
     }
 
     // Setup desktop view
-    @media (min-width: @grid-float-breakpoint) {
+    @media (min-width: @screen-sm-min) {
         .heading-elements.collapse {
             display: block;
             visibility: visible;
@@ -264,16 +269,26 @@ svg {
     }
 }
 
-// Filled page header
-.page-header-filled {
-    background-color: #fafafa;
-    border-bottom-width: 1px;
 
-    .navbar {
-        margin-bottom: 0;
-        border-bottom-width: 0;
+// Transparent header
+.page-header-transparent {
+    border-bottom: 0;
+    margin-bottom: 0;
+    background-color: transparent;
+
+    // Change child elements colors
+    .navbar-default {
+        background-color: #fff;
+    }
+
+    // Setup mobile view
+    @media (max-width: @grid-float-breakpoint-max) {
+        .heading-elements {
+            background-color: @panel-bg;
+        }
     }
 }
+
 
 // Page title
 .page-title {
@@ -338,6 +353,7 @@ svg {
         padding-right: 0;
     }
 }
+
 
 // Content itself
 .page-header-content {

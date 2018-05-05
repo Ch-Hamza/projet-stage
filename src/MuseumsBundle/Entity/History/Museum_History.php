@@ -1,0 +1,104 @@
+<?php
+
+namespace MuseumsBundle\Entity\History;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Museum_History
+ *
+ * @ORM\Table(name="history_museum__history")
+ * @ORM\Entity(repositoryClass="MuseumsBundle\Repository\History\Museum_HistoryRepository")
+ */
+class Museum_History
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(name="action", type="string")
+     */
+    private $action;
+
+    /**
+     * @ORM\Column(name="date", type="date")
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(name="museum_id", type="integer")
+     */
+    private $museum_id;
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param mixed $action
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * Set museumId.
+     *
+     * @param int $museumId
+     *
+     * @return Museum_History
+     */
+    public function setMuseumId($museumId)
+    {
+        $this->museum_id = $museumId;
+
+        return $this;
+    }
+
+    /**
+     * Get museumId.
+     *
+     * @return int
+     */
+    public function getMuseumId()
+    {
+        return $this->museum_id;
+    }
+}

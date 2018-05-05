@@ -1,4 +1,4 @@
-/* ------------------------------------------------------------------------------
+    /* ------------------------------------------------------------------------------
  *
  *  # D3.js - basic area chart
  *
@@ -23,7 +23,7 @@ $(function () {
 
         // Define main variables
         var d3Container = d3.select(element),
-            margin = {top: 5, right: 10, bottom: 20, left: 40},
+            margin = {top: 5, right: 40, bottom: 20, left: 40},
             width = d3Container.node().getBoundingClientRect().width - margin.left - margin.right,
             height = height - margin.top - margin.bottom - 5;
 
@@ -130,7 +130,7 @@ $(function () {
             svg.append("g")
                 .attr("class", "d3-axis d3-axis-horizontal d3-axis-strong")
                 .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
+                .call(xAxis.tickFormat(d3.time.format("%d-%m-%y")));
 
             // Vertical
             var verticalAxis = svg.append("g")
@@ -145,7 +145,7 @@ $(function () {
                 .style("fill", "#999")
                 .style("font-size", 12)
                 .style("text-anchor", "end")
-                .text("Price ($)");
+                .text("Users");
 
         });
 

@@ -1,127 +1,162 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>{% block title %}Administration{% endblock %}</title>
 
     {% block stylesheets %}
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="{{ asset('assets/css/icons/icomoon/styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/core.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/colors.css') }}">
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/core.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/components.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/colors.css') }}" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+
+
+    <!-- Core JS files -->
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/loaders/pace.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/core/libraries/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/loaders/blockui.min.js') }}"></script>
+    <!-- /core JS files -->
+
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/core/app.js') }}"></script>
+    <!-- /theme JS files -->
     {% endblock %}
+
 </head>
-<body class="navbar-top">
+
+<body>
+
 {% block body %}
-<!-- Main navbar -->
-<div class="navbar navbar-default navbar-fixed-top header-highlight">
-    <div class="navbar-header bg-brown-800">
-        <!-- TODO change logo -->
-        <a class="navbar-brand" href="{{ path('index_page') }}"><img src="{{ asset('assets/images/logo_light.png') }}" alt=""></a>
 
-        <!-- mobile navbar collapse logo -->
-        <ul class="nav navbar-nav pull-right visible-xs-block">
-            <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
-            <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
-        </ul>
+    <!-- Main navbar -->
+    <div class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <a href="{{ path('index_page') }}"><img src="{{ asset('assets/images/logo.png') }}" alt=""></a>
+
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <ul class="nav navbar-nav">
+                <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown dropdown-user">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="{{ vich_uploader_asset(app.user, 'imageFile') }}" alt="" style="width: 30px; height: 30px; object-fit: cover;">
+                        <span>{{ app.user.firstname }}</span>
+                        <i class="caret"></i>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="{{ path('fos_user_profile_show') }}"><i class="icon-user-plus"></i> My profile</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}"><i class="icon-switch2"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-
-    <!-- navbar mobile -->
-    <div class="navbar-collapse collapse" id="navbar-mobile">
-        <ul class="nav navbar-nav">
-            <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
-        </ul>
-
-        <!-- profile menu -->
-        <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown dropdown-user">
-                <a class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{ asset('assets/images/image.png') }}" alt="">
-                    <span>Victoria</span>
-                    <i class="caret"></i>
-                </a>
-
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <!-- TODO implement links -->
-                    <li><a href="#"><i class="icon-user-plus"></i> My profile</a></li>
-                    <li><a href="#"><span class="badge badge-warning pull-right">58</span> <i class="icon-comment-discussion"></i> Messages</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-                    <li><a href="{{ path('fos_user_security_logout') }}"><i class="icon-switch2"></i> Logout</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</div>
-<!-- /main navbar -->
+    <!-- /main navbar -->
 
 
-<!-- Page container -->
-<div class="page-container">
+    <!-- Page container -->
+    <div class="page-container">
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main sidebar -->
+            <div class="sidebar sidebar-main">
+                <div class="sidebar-content">
 
-    <!-- Page content -->
-    <div class="page-content">
-        <!-- Main sidebar -->
-        <div class="sidebar sidebar-main bg-brown-800">
-            <div class="sidebar-content">
+                    <!-- User menu -->
+                    <div class="sidebar-user">
+                        <div class="category-content">
+                            <div class="media">
+                                <a href="#" class="media-left"><img src="{{ vich_uploader_asset(app.user, 'imageFile') }}" class="img-circle img-sm" style="object-fit: cover;" alt=""></a>
+                                <div class="media-body">
+                                    <span class="media-heading text-semibold">{{ app.user.firstname }} {{ app.user.lastname }}</span>
+                                    <div class="text-size-mini text-muted">
+                                        <i class="icon-pin text-size-small"></i>
+                                        {% if(app.user.roles[0]=="ROLE_ADMIN") %}
+                                            Administrator
+                                        {% else %}
+                                            Operator
+                                        {% endif %}
 
-                <!-- User menu -->
-                <div class="sidebar-user bg-brown-600">
-                    <div class="category-content">
-                        <div class="media">
-                            <!-- TODO implement img -->
-                            <div class="media-left"><img src="{{ asset('assets/images/image.png') }}" class="img-circle img-sm" alt=""></div>
-                            <div class="media-body">
-                                <span class="media-heading text-semibold">Victoria Baker</span>
-                                <div class="text-size-mini text-muted">
-                                    <i class="icon-vcard text-size-small"></i> &nbsp;Administrator
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- user menu -->
+                    <!-- /user menu -->
 
-                <!-- Main navigation -->
-                <div class="sidebar-category sidebar-category-visible">
-                    <div class="category-content no-padding">
-                        <ul class="navigation navigation-main navigation-accordion">
 
-                            <!-- Main -->
-                            <li><a href="{{ path('index_page') }}"><i class="icon-home4" title="Index"></i> <span>Dashboard</span></a></li>
+                    <!-- Main navigation -->
+                    <div class="sidebar-category sidebar-category-visible">
+                        <div class="category-content no-padding">
+                            <ul class="navigation navigation-main navigation-accordion">
 
-                            <li class="navigation-header"><span>Content Management</span> <i class="icon-menu"></i></li>
-                            <!-- TODO links -->
-                            <li><a href="{{ path('index_user_page') }}"><i class="icon-users" title="User Management"></i> <span>User Management</span></a></li>
-                            <li><a href="#"><i class="icon-camera" title="Museum Management"></i> <span>Museum Management</span></a></li>
-                            <li><a href="#"><i class="icon-bell2" title="Exposition Management"></i> <span>Exposition Management</span></a></li>
-                            <li><a href="#"><i class="icon-cart5" title="Advertisement Management"></i> <span>Advertisement Management</span></a></li>
-                            <!-- /main -->
+                                <!-- Main -->
+                                <li {% if app.request.attributes.get('_route') == 'index_page' %} class="active"{% endif %}><a href="{{ path('index_page') }}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
 
-                        </ul>
+                                <li>
+                                    <a href="#"><i class="icon-users4"></i> <span>Users</span></a>
+                                    <ul>
+                                        <li {% if app.request.attributes.get('_route') == 'index_admins_page' %} class="active"{% endif %}><a href="{{ path('index_admins_page') }}">Administrators</a></li>
+                                        <li {% if app.request.attributes.get('_route') == 'index_operators_page' %} class="active"{% endif %}><a href="{{ path('index_operators_page') }}">Operators</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#"><i class="icon-camera"></i> <span>Museums</span></a>
+                                    <ul>
+                                        <li {% if app.request.attributes.get('_route') == 'index_museums_page' %} class="active"{% endif %}><a href="{{ path('index_museums_page') }}">Museums</a></li>
+                                        <li {% if app.request.attributes.get('_route') == 'index_category_page' %} class="active"{% endif %}><a href="{{ path('index_category_page') }}">Categories</a></li>
+                                        <li {% if app.request.attributes.get('_route') == 'index_critere_page' %} class="active"{% endif %}><a href="{{ path('index_critere_page') }}">Criteres</a></li>
+                                        <li {% if app.request.attributes.get('_route') == 'index_canton_page' %} class="active"{% endif %}><a href="{{ path('index_canton_page') }}">Canton</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a  {% if app.request.attributes.get('_route') == 'index_exposition_page' %} class="active"{% endif %} href="{{ path('index_exposition_page') }}"><i class="icon-bell2"></i> <span>Expositions</span></a>
+                                </li>
+
+                                <li>
+                                    <a href="#"><i class="icon-cart5"></i> <span>Advertisements</span></a>
+                                    <ul>
+                                        <li {% if app.request.attributes.get('_route') == 'index_ads_page' %} class="active"{% endif %}><a href="{{ path('index_ads_page') }}">Browse All Ads</a></li>
+                                        <li {% if app.request.attributes.get('_route') == 'browse_ads_page' %} class="active"{% endif %}><a href="{{ path('browse_ads_page', {'id': app.user.id}) }}">My Advertisements</a></li>
+                                        <li {% if app.request.attributes.get('_route') == 'add_ad_page' %} class="active"{% endif %}><a href="{{ path('add_ad_page') }}">Add Advertisements</a></li>
+                                    </ul>
+                                </li>
+
+                                <li {% if app.request.attributes.get('_route') == 'fos_user_change_password' %} class="active"{% endif %}>
+                                    <a href="{{ path('fos_user_change_password') }}"><i class="icon-user-lock"></i> <span>Change Password</span></a>
+                                </li>
+
+                            </ul>
+                        </div>
                     </div>
+                    <!-- /main navigation -->
+
                 </div>
-                <!-- /main navigation -->
-
             </div>
-        </div>
-        <!-- /main sidebar -->
+            <!-- /main sidebar -->
+{% endblock %}
 
-        {% endblock %}
-
-        {% block javascripts %}
-            <script type="text/javascript" src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('assets/js/core/libraries/bootstrap.min.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('assets/js/plugins/loaders/pace.min.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('assets/js/plugins/loaders/blockui.min.js') }}"></script>
-
-            <script type="text/javascript" src="{{ asset('assets/js/core/app.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
-        {% endblock %}
 </body>
 </html>

@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
-use UserBundle\Entity\HistoryEntry;
 use UserBundle\Entity\User;
 use UserBundle\Form\EditUserType;
 use UserBundle\Form\UserType;
@@ -14,14 +13,14 @@ use UserBundle\Form\UserType;
 class UserManagementController extends Controller
 {
     /**
-     * @Route("/", name="index_user_page")
+     * @Route("/admins", name="index_admins_page")
      */
     public function indexAction()
     {
         $listUsers = $this->getDoctrine()
             ->getManager()
             ->getRepository(User::class)
-            ->findAll()
+            ->findByRole('ROLE_ADMIN')
         ;
 
         return $this->render('UserBundle::list.html.twig', array(
@@ -30,65 +29,53 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @Route("/view/{id}", name="view_user_page")
+     * @Route("/operators", name="index_operators_page")
      */
-    public function viewAction($id)
+    public function operatorsAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(User::class)->find($id);
-        if(null === $user)
-        {
-            throw new NotFoundHttpException("User with id: ".$id." doesn't exist");
-        }
-
-        $listHist = $em
-            ->getRepository(HistoryEntry::class)
-            ->findBy(array('user' => $user))
+        $listUsers = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(User::class)
+            ->findByRole('ROLE_OPERATOR')
         ;
 
-        return $this->render('UserBundle::view.html.twig', array(
-            'user' => $user,
-            'listHist' => $listHist
+        return $this->render('@User/operator/operators_list.html.twig', array(
+            'listUsers' => $listUsers,
         ));
     }
 
-   /*
+    /**
+     * @Route("/admins/add", name="add_user_page")
+     */
     public function addAction(Request $request)
     {
-        /*$user = new User();
-        $form = $this->createForm(UserType::class, $user);
-
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-            return $this->redirectToRoute('index_user_page');
-        }
-        return $this->render('UserBundle::add.html.twig', array(
-            'form' => $form->createView(),
-        ));*
-
         $userManger = $this->get('fos_user.user_manager');
         $user = $userManger->createUser();
         $user->setEnabled(true);
+        $user->removeRole("ROLE_OPERATOR");
+        $user->addRole('ROLE_ADMIN');
+        $user->setUpdatedAt(new \DateTime('now'));
+
         $form = $this->createForm(UserType::class, $user);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
             $encoder_service = $this->get('security.encoder_factory');
             $encoder = $encoder_service->getEncoder($user);
             $encoded_pass = $encoder->encodePassword($user->getPassword(), $user->getSalt());
             $user->setPassword($encoded_pass);
+
             $userManger->updateUser($user);
-            return $this->redirectToRoute('index_user_page');
+            return $this->redirectToRoute('index_admins_page');
         }
 
         return $this->render('UserBundle::add.html.twig', array(
             'form' => $form->createView(),
         ));
-    }*/
+    }
 
     /**
-     * @Route("/edit/{id}", name="edit_user_page")
+     * @Route("/admins/edit/{id}", name="edit_user_page")
      */
     public function editAction($id, Request $request)
     {
@@ -104,17 +91,16 @@ class UserManagementController extends Controller
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
         {
             $userManger->updateUser($user);
-            return $this->redirectToRoute('index_user_page');
+            return $this->redirectToRoute('index_page');
         }
 
         return $this->render('UserBundle::edit.html.twig', array(
-            'user' => $user,
             'form' => $form->createView()
         ));
     }
 
     /**
-     * @Route("/delete/{id}", name="delete_user_page")
+     * @Route("/admins/delete/{id}", name="delete_user_page")
      */
     public function deleteAction($id)
     {
@@ -126,7 +112,57 @@ class UserManagementController extends Controller
         }
         $em->remove($user);
         $em->flush();
-        return $this->redirectToRoute('index_user_page');
+
+        return $this->redirectToRoute('index_page');
     }
 
+    /**
+     * @Route("/admins/enable/{id}", name="enable_admin_page")
+     */
+    public function enableAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find($id);
+        if(null === $user)
+        {
+            throw new NotFoundHttpException("User with id: ".$id." doesn't exist");
+        }
+
+        if($user->isEnabled())
+        {
+            $user->setEnabled(false);
+        }
+        else
+        {
+            $user->setEnabled(true);
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('index_admins_page');
+    }
+
+    /**
+     * @Route("/operators/enable/{id}", name="enable_operator_page")
+     */
+    public function toggleAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find($id);
+        if(null === $user)
+        {
+            throw new NotFoundHttpException("User with id: ".$id." doesn't exist");
+        }
+
+        if($user->isEnabled())
+        {
+            $user->setEnabled(false);
+        }
+        else
+        {
+            $user->setEnabled(true);
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('index_operators_page');
+    }
 }

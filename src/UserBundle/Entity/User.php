@@ -4,12 +4,23 @@ namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @Vich\Uploadable
  */
 class User extends \FOS\UserBundle\Model\User
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setImage('default.png');
+        $this->setUpdatedAt(new \DateTime('now'));
+        $this->addRole("ROLE_OPERATOR");
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -28,14 +39,22 @@ class User extends \FOS\UserBundle\Model\User
     private $lastname;
 
     /**
-     * @ORM\OneToOne(targetEntity="UserBundle\Entity\Image", cascade={"persist", "remove"})
+     * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserBundle\Entity\HistoryEntry", mappedBy="user")
+     * @Vich\UploadableField(mapping="user_images", fileNameProperty="image")
+     * @var File
      */
-    private $history_entries;
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * @return mixed
@@ -56,7 +75,7 @@ class User extends \FOS\UserBundle\Model\User
     /**
      * @param mixed $firstname
      */
-    public function setFirstname($firstname): void
+    public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
     }
@@ -72,9 +91,27 @@ class User extends \FOS\UserBundle\Model\User
     /**
      * @param mixed $lastname
      */
-    public function setLastname($lastname): void
+    public function setLastname($lastname)
     {
         $this->lastname = $lastname;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
     }
 
     public function getImage()
@@ -82,21 +119,27 @@ class User extends \FOS\UserBundle\Model\User
         return $this->image;
     }
 
-    public function setImage(Image $image = null)
+    /**
+     * Set updatedAt.
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return User
+     */
+    public function setUpdatedAt($updatedAt)
     {
-        $this->image = $image;
-    }
+        $this->updatedAt = $updatedAt;
 
-    public function getHistoryEntries()
-    {
-        return $this->history_entries;
+        return $this;
     }
 
     /**
-     * @param mixed $history_entries
+     * Get updatedAt.
+     *
+     * @return \DateTime
      */
-    public function setHistoryEntries($history_entries): void
+    public function getUpdatedAt()
     {
-        $this->history_entries = $history_entries;
+        return $this->updatedAt;
     }
 }

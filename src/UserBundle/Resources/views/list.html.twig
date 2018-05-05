@@ -5,8 +5,25 @@
 {% block body %}
 
     {{ parent() }}
+
     <!-- Main content -->
     <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Administrators</span> - List</h4>
+                </div>
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('index_page') }}"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li class="active">Administrators</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header -->
 
         <!-- Content area -->
         <div class="content">
@@ -14,30 +31,45 @@
             <!-- Table -->
             <div class="panel panel-flat">
                 <div class="panel-heading">
-                    <h5 class="panel-title">User Repository</h5>
+                    <div class="row">
+                        {% if(app.request.attributes.get('_route')=="index_admins_page") %}
+                            <a href="{{ path('add_user_page') }}" class="btn btn-success"><i class="icon-plus3 position-left"></i>Add Admin</a>
+                        {% endif %}
+
+                    </div>
                 </div>
 
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Name</th>
                             <th>Username</th>
                             <th>Email</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for user in listUsers %}
                             <tr>
-                                <td>{{ user.id }}</td>
+                                <td>{{ user.firstname }}</td>
                                 <td>{{ user.username }}</td>
                                 <td>{{ user.email }}</td>
-                                <td><a class="btn bg-teal-400 btn-labeled" href="{{ path('view_user_page', {'id': user.id}) }}"><b><i class="icon-eye"></i></b> View</a></td>
-                                <td><a class="btn btn-info btn-labeled" href="{{ path('edit_user_page', {'id': user.id}) }}"><b><i class="icon-pencil5"></i></b> Edit</a></td>
-                                <td><a class="btn btn-danger btn-labeled" href="{{ path('delete_user_page', {'id': user.id}) }}"><b><i class="icon-trash"></i></b> Delete</a></td>
+                                <td>
+                                    {% if user.enabled %}
+                                        <span class="label bg-success-400">Enabled</span>
+                                    {% else %}
+                                        <span class="label bg-danger-400">Disabled</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <ul class="icons-list mt-15">
+                                        <li><a href="{{ path('enable_admin_page', {'id': user.id}) }}" data-popup="tooltip" title="Toggle"><i class="icon-checkmark"></i></a></li>
+                                        <li><a href="{{ path('edit_user_page', {'id': user.id}) }}" data-popup="tooltip" title="Edit"><i class="icon-pencil5"></i></a></li>
+                                        <li><a href="{{ path('delete_user_page', {'id': user.id}) }}" data-popup="tooltip" title="Delete"><i class="icon-trash" onclick="return confirm('Are you sure you want to Delete this Administrator?')"></i></a></li>
+                                    </ul>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -47,20 +79,17 @@
             </div>
             <!-- /table -->
 
-            <div>
-                <a class="btn btn-xlg bg-orange-600" href="{{ path('fos_user_registration_register') }}">Add User</a>
-            </div>
+            {{ include('IndexBundle::footer.html.twig') }}
 
         </div>
         <!-- /content area -->
-        {{ include('IndexBundle::footer.html.twig') }}
     </div>
     <!-- /main content -->
 
-    </div>
-    <!-- /page content -->
+</div>
+<!-- /page content -->
 
-    </div>
-    <!-- /page container -->
+</div>
+<!-- /page container -->
 
 {% endblock %}

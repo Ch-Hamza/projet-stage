@@ -10,4 +10,28 @@ namespace UserBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param string $role
+     *
+     * @return array
+     */
+    public function findByRole($role)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+            ->from($this->_entityName, 'u')
+            ->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"'.$role.'"%');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    function count_users(){
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('count(user.id)');
+        $qb->from('UserBundle:User','user');
+
+        $count = $qb->getQuery()->getSingleScalarResult();
+        return $count;
+    }
 }
