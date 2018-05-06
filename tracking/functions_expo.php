@@ -109,6 +109,7 @@ function parseAllExpositions($connexion, $state){
                 
                 $link = $node->childNodes[1]->childNodes[1]->attributes[0]->nodeValue;
                 echo "<br>link = ".$link."<br>";
+                $actual_name = $node->childNodes[1]->childNodes[1]->childNodes[1]->nodeValue;
 
                 if(!$node->childNodes[1]->nodeValue == ''){
                     $output = getDetailsFromUrl($link);
@@ -133,6 +134,8 @@ function parseAllExpositions($connexion, $state){
                                     $images = array();
 
                                     $name = $value->childNodes[1]->nodeValue;
+
+                                    if($name != $actual_name){continue;}
 
                                     $date = explode('.', $value->childNodes[3]->nodeValue);
                                     $start = $date[2]."-".$date[1]."-".$date[0];

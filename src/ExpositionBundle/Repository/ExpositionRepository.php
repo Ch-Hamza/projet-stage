@@ -100,7 +100,7 @@ class ExpositionRepository extends \Doctrine\ORM\EntityRepository
                 }
 
                 else{
-                    $qb->andWhere('m.'.$key.' = :value')
+                    $qb->andWhere('e.'.$key.' = :value')
                         ->setParameter('value', $value);
                 }
             }
